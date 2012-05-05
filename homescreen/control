@@ -1,0 +1,10 @@
+Package: kr.iolate.homescreen
+Name: Homescreen
+Depends: 
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome library of some sort!!
+Maintainer: iolate
+Author: iolate
+Section: System
+Tag: role::developer
