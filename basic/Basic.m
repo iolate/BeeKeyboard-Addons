@@ -1,6 +1,13 @@
-#import <UIKit/UIKit.h>
+ #import <UIKit/UIKit.h>
 
 #define LS(a) a
+#define SETTING_FILE @"/var/mobile/Library/Preferences/blueteeth/basic.plist"
+
+@interface BeeKeyboard
++(BeeKeyboard *)sharedInstance;
+-(NSString *)eventFromKey:(NSString *)keyString AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
+-(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
+@end
 
 @interface BeeBasic : NSObject
 {
@@ -50,7 +57,12 @@ static BeeBasic* instance;
         
         if (alert) [alert release];
         
-        alert = [[UIAlertView alloc] initWithTitle:LS(@"") message:LS(@"종료하시겠습니까?") delegate:self cancelButtonTitle:LS(@"Cancel") otherButtonTitles:LS(@"Quit"), nil];
+        NSString* bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        BOOL onSpringboard = [bundleIdentifier isEqualToString:@"com.apple.springboard"] ? YES : NO;
+        NSString* message = onSpringboard ? LS(@"Respring?") : LS(@"Quit?");
+        NSString* otherButton = onSpringboard ? LS(@"Restart") : LS(@"Quit");
+        
+        alert = [[UIAlertView alloc] initWithTitle:LS(@"") message:message delegate:self cancelButtonTitle:LS(@"Cancel") otherButtonTitles:otherButton, nil];
         [alert setTag:1];
         [alert show];
     }
@@ -96,22 +108,30 @@ static BeeBasic* instance;
     [rAlert _buttonClicked:cButton];
     
 }
+
 @end
 
 
 int keyEvent(int keyCode, int modStat, BOOL keyDown) 
 {
     if (keyDown) {
-        if (keyCode == 20 && modStat%2) {
+        NSString* keyString = [NSString stringWithFormat:@"7.%d.%d", modStat, keyCode];
+        NSString* event = [[objc_getClass("BeeKeyboard") sharedInstance] eventFromKey:keyString AddonName:@"Basic" Table:@"basic" Global:NO];
+        
+        if ([event isEqualToString:@"QuitApp"]) {
             [[BeeBasic sharedInstance] quitApp];
             return 1;
-        }else if (keyCode == 41) {
-            [[BeeBasic sharedInstance] Escape];
+        }else {
             
-            if ([[BeeBasic sharedInstance] topAlertView] != nil) return 1;
-            else return 0;
+            if (keyCode == 41) {
+                [[BeeBasic sharedInstance] Escape];
+                
+                if ([[BeeBasic sharedInstance] topAlertView] != nil) return 1;
+                else return 0;
+            }   
         }
     }
+    
     
     return 0;
 }

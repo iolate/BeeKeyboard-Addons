@@ -40,7 +40,7 @@
     page = MIN(page, numberOfPages-1);
     [SBIC scrollToIconListAtIndex:page animate:YES];
 }
-
+/
 +(void)movePageDirRight:(BOOL)right
 {
     BOOL onHome = NO;
@@ -56,12 +56,14 @@
     UIScrollView* scroll = [SBIC scrollView];
     int numberOfPages = scroll.contentSize.width / scroll.bounds.size.width - 1;
     
-    int index = [SBIC currentIconListIndex];
+    int index = scroll.frame.origin.x / scroll.bounds.size.width; //= [SBIC currentIconListIndex];
     
     if (right) index++;
     else index--;
     
     index = MIN(index, numberOfPages-1);
+    
+    NSLog(@"%d", index);
     
     if (index >= -1)
         [SBIC scrollToIconListAtIndex:index animate:YES];

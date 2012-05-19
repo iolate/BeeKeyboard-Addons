@@ -21,6 +21,12 @@
 @end
 
 
+@interface BeeKeyboard
++(BeeKeyboard *)sharedInstance;
+-(NSString *)eventFromKey:(NSString *)keyString AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
+-(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
+@end
+
 @interface BeeGlobalBasic : NSObject
 {
     BOOL lockNC;
@@ -92,7 +98,7 @@ static BeeGlobalBasic* instance;
 }
 -(void)activateNC
 {
-    SBBulletinListController *blc = (SBBulletinListController *)[objc_getClass("SBBulletinListController") sharedInstance];
+    SBBulletinListController *blc = (SBBulletinListController *)[objc_getClass("SBBulletinListController") sharedInstance]; 
     BOOL islA = blc && [blc listViewIsActive]; //TODO:Support iOS4
     
     SBUIController *SBUI = (SBUIController *)[objc_getClass("SBUIController") sharedInstance];
@@ -154,62 +160,64 @@ static BOOL homePressing;
 
 int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
 {
-    if (usagePage == 65281) {
-        if (keyCode == 16 && keyDown) { //expose
-            [[BeeGlobalBasic sharedInstance] activateSwitcher];
-            
-            return 2;
-        }else if (keyCode == 2 && keyDown) { //dash board
-            [[BeeGlobalBasic sharedInstance] activateNC];
-            
-            return 2;
-        }
-        
-    }else if (usagePage == 7) {
-        if (homePressing && ((keyCode == 26 && !keyDown) || modStat%2 == 0)) {
-            homePressing = NO;
-            [[BeeGlobalBasic sharedInstance] homeButtonUp];
-            
-            return 2;
-        }
-        
-        if (keyCode == 26 && modStat%2 && keyDown) {
-            homePressing = YES;
-            [[BeeGlobalBasic sharedInstance] homeButtonDown];
-            
-            return 2;
-        }else if ((keyCode == 81 || keyCode == 82) && modStat%2 && keyDown) {
-#pragma mark NC & Switcher
-            SBBulletinListController *blc = (SBBulletinListController *)[objc_getClass("SBBulletinListController") sharedInstance];
-            BOOL islA = blc && [blc listViewIsActive]; //TODO:Support iOS4
-            
-            SBUIController *SBUI = (SBUIController *)[objc_getClass("SBUIController") sharedInstance];
-            BOOL isA = [SBUI isSwitcherShowing];
-            
-            if (keyCode == 81) { if (isA) [[BeeGlobalBasic sharedInstance] activateSwitcher]; else [[BeeGlobalBasic sharedInstance] activateNC]; }
-            else if (keyCode == 82) { if (islA) [[BeeGlobalBasic sharedInstance] activateNC]; else [[BeeGlobalBasic sharedInstance] activateSwitcher]; }
-            
-            return 2;
-        }else if ((keyCode == 79 || keyCode == 80) && modStat%2 && keyDown) {
-#pragma mark App Switch
-            
-            id uic = [objc_getClass("SBUIController") sharedInstance];
-            
-            BOOL right = keyCode==79 ? YES : NO;
-            //TODO: invert option
-            right = !right;
-            
-            if (!right){
-                if ([uic respondsToSelector:@selector(programmaticSwitchAppGestureMoveToLeft)])
-                    [uic programmaticSwitchAppGestureMoveToLeft];
+    if (homePressing) {
+        NSString* homeKey = [[objc_getClass("BeeKeyboard") sharedInstance] keyFromEvent:@"Home" AddonName:@"Basic" Table:@"basic" Global:YES];
+
+        int hKeyCode = 0, hModStat = 0, hUsagePage = 0;
+        if ([homeKey rangeOfString:@"."].length) {
+            NSArray* keys = [homeKey componentsSeparatedByString:@"."];
+            if ((int)[keys count] == 3) {
+                hUsagePage = [[keys objectAtIndex:0] intValue];
+                hModStat = [[keys objectAtIndex:1] intValue];
+                hKeyCode = [[keys objectAtIndex:2] intValue];
                 
-            }else if (right){
-                if ([uic respondsToSelector:@selector(programmaticSwitchAppGestureMoveToRight)])
-                    [uic programmaticSwitchAppGestureMoveToRight];
             }
             
-            return 2;
+            if ((!keyDown && keyCode == hKeyCode) ||
+                ((modStat & hModStat) != hModStat)) {
+                homePressing = NO;
+                [[BeeGlobalBasic sharedInstance] homeButtonUp];
+                
+                return 2;
+            }
         }
+    }
+    NSString* keyString = [NSString stringWithFormat:@"%d.%d.%d", usagePage, modStat, keyCode];
+    NSString* event = [[objc_getClass("BeeKeyboard") sharedInstance] eventFromKey:keyString AddonName:@"Basic" Table:@"basic" Global:YES];
+
+    if ([event isEqualToString:@"Home"]) {
+        if (keyDown) {
+            if (homePressing) {
+                [[BeeGlobalBasic sharedInstance] homeButtonUp];
+            }
+            homePressing = YES;
+            [[BeeGlobalBasic sharedInstance] homeButtonDown];
+        }
+        return 2;
+    }else if ([event isEqualToString:@"Switcher"] || [event isEqualToString:@"Switcher2"]) {
+        if (keyDown) {
+            [[BeeGlobalBasic sharedInstance] activateSwitcher];
+        }
+        return 2;
+    }else if ([event isEqualToString:@"NotiCenter"] || [event isEqualToString:@"NotiCenter2"]) {
+        if (keyDown) {
+            [[BeeGlobalBasic sharedInstance] activateNC];
+        }
+        return 2;
+    }else if ([event isEqualToString:@"AppLeft"]) {
+        if (keyDown) {
+            id uic = [objc_getClass("SBUIController") sharedInstance];
+            if ([uic respondsToSelector:@selector(programmaticSwitchAppGestureMoveToLeft)])
+                [uic programmaticSwitchAppGestureMoveToLeft];
+        }
+        return 2;
+    }else if ([event isEqualToString:@"AppRight"]) {
+        if (keyDown) {
+            id uic = [objc_getClass("SBUIController") sharedInstance];
+            if ([uic respondsToSelector:@selector(programmaticSwitchAppGestureMoveToRight)])
+                [uic programmaticSwitchAppGestureMoveToRight];
+        }
+        return 2; 
     }
     
     return 0;
