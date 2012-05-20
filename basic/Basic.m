@@ -4,11 +4,9 @@
 #define SETTING_FILE @"/var/mobile/Library/Preferences/blueteeth/basic.plist"
 
 @interface BeeKeyboard
-+(BeeKeyboard *)sharedInstance;
--(NSString *)eventFromKey:(NSString *)keyString AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
--(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
++(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Global:(BOOL)global;
++(NSString *)eventFromKeyCode:(int)keyCode Mod:(int)modStat UsagePage:(int)uP AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
 @end
-
 @interface BeeBasic : NSObject
 {
     BOOL showAlert;
@@ -102,10 +100,10 @@ static BeeBasic* instance;
 -(void)Escape {
     
 #pragma mark Close AlertView
-    UIAlertView* rAlert = [self topAlertView];
+    //UIAlertView* rAlert = [self topAlertView];
     
-    id cButton = [rAlert buttonAtIndex:[rAlert cancelButtonIndex]];
-    [rAlert _buttonClicked:cButton];
+    //id cButton = [rAlert buttonAtIndex:[rAlert cancelButtonIndex]];
+    //[rAlert _buttonClicked:cButton];
     
 }
 
@@ -115,8 +113,8 @@ static BeeBasic* instance;
 int keyEvent(int keyCode, int modStat, BOOL keyDown) 
 {
     if (keyDown) {
-        NSString* keyString = [NSString stringWithFormat:@"7.%d.%d", modStat, keyCode];
-        NSString* event = [[objc_getClass("BeeKeyboard") sharedInstance] eventFromKey:keyString AddonName:@"Basic" Table:@"basic" Global:NO];
+        //NSString* keyString = [NSString stringWithFormat:@"7.%d.%d", modStat, keyCode];
+        NSString* event = [objc_getClass("BeeKeyboard") eventFromKeyCode:keyCode Mod:modStat UsagePage:7 AddonName:@"Basic" Table:@"basic" Global:NO];
         
         if ([event isEqualToString:@"QuitApp"]) {
             [[BeeBasic sharedInstance] quitApp];

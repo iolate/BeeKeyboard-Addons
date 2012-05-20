@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Move Page</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>1 ~ 0</string>
+			<key>defaults</key>
+			<string>blueteeth/homescreen</string>
+			<key>key</key>
+			<string>SNum</string>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Move Page</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/homescreen</string>
+			<key>default</key>
+			<string>7.0.79</string>
+			<key>key</key>
+			<string>MoveRight</string>
+			<key>label</key>
+			<string>To right</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/homescreen</string>
+			<key>default</key>
+			<string>7.0.80</string>
+			<key>key</key>
+			<string>MoveLeft</string>
+			<key>label</key>
+			<string>To left</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Launch Applications</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>Homescreen</string>
+</dict>
+</plist>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.1.20</string>
+			<key>key</key>
+			<string>QuitApp</string>
+			<key>label</key>
+			<string>Quit App</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>Basic - App</string>
+</dict>
+</plist>

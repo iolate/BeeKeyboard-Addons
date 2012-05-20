@@ -11,6 +11,7 @@
 - (void)programmaticSwitchAppGestureMoveToLeft;
 - (void)programmaticSwitchAppGestureMoveToRight;
 -(BOOL)respondsToSelector:(SEL)fp8;
+-(void)performSelectorOnMainThread:(SEL)fp8 withObject:(id)fp12 waitUntilDone:(BOOL)fp16;
 @end
 
 @interface SBBulletinListController
@@ -22,9 +23,8 @@
 
 
 @interface BeeKeyboard
-+(BeeKeyboard *)sharedInstance;
--(NSString *)eventFromKey:(NSString *)keyString AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
--(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
++(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Global:(BOOL)global;
++(NSString *)eventFromKeyCode:(int)keyCode Mod:(int)modStat UsagePage:(int)uP AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
 @end
 
 @interface BeeGlobalBasic : NSObject
@@ -124,11 +124,7 @@ static BeeGlobalBasic* instance;
         [NSTimer scheduledTimerWithTimeInterval:0.4f target:self selector:@selector(unlockActivateNC) userInfo:nil repeats:NO];
     }
 }
--(void)_activateSwitcher
-{
-    SBUIController *SBUI = (SBUIController *)[objc_getClass("SBUIController") sharedInstance];
-    [SBUI _toggleSwitcher];
-}
+
 -(void)activateSwitcher
 {
     SBUIController *SBUI = (SBUIController *)[objc_getClass("SBUIController") sharedInstance];
@@ -144,10 +140,9 @@ static BeeGlobalBasic* instance;
         }
     }else {
         //[SBUI _toggleSwitcher];
-        [self performSelectorOnMainThread:@selector(_activateSwitcher) withObject:nil waitUntilDone:YES];
+        [SBUI performSelectorOnMainThread:@selector(_toggleSwitcher) withObject:nil waitUntilDone:YES];
         
         return;
-        //if (!isA) [self performSelector:@selector(activateSwitcher) withObject:nil afterDelay:0.05f];
     }
 }
 
@@ -161,7 +156,7 @@ static BOOL homePressing;
 int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
 {
     if (homePressing) {
-        NSString* homeKey = [[objc_getClass("BeeKeyboard") sharedInstance] keyFromEvent:@"Home" AddonName:@"Basic" Table:@"basic" Global:YES];
+        NSString* homeKey = [objc_getClass("BeeKeyboard") keyFromEvent:@"Home" AddonName:@"Basic" Global:YES];
 
         int hKeyCode = 0, hModStat = 0, hUsagePage = 0;
         if ([homeKey rangeOfString:@"."].length) {
@@ -182,8 +177,8 @@ int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
             }
         }
     }
-    NSString* keyString = [NSString stringWithFormat:@"%d.%d.%d", usagePage, modStat, keyCode];
-    NSString* event = [[objc_getClass("BeeKeyboard") sharedInstance] eventFromKey:keyString AddonName:@"Basic" Table:@"basic" Global:YES];
+    //NSString* keyString = [NSString stringWithFormat:@"%d.%d.%d", usagePage, modStat, keyCode];
+    NSString* event = [objc_getClass("BeeKeyboard") eventFromKeyCode:keyCode Mod:modStat UsagePage:usagePage AddonName:@"Basic" Table:@"basic" Global:YES];
 
     if ([event isEqualToString:@"Home"]) {
         if (keyDown) {
