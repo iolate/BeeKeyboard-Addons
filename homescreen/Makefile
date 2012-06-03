@@ -1,8 +1,10 @@
 include theos/makefiles/common.mk
 
+export FW_DEVICE_IP = 10.0.1.3
+
 LIBRARY_NAME = Homescreen
 Homescreen_FILES = Homescreen.m
-Homescreen_FRAMEWORKS = UIKit
+Homescreen_FRAMEWORKS = UIKit QuartzCore
 
 ADDITIONAL_CFLAGS = -std=c99
 

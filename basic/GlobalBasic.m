@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import <GraphicsServices/GSEvent.h>
+#import <_SpringBoard/SpringBoard.h>
 
 @interface SBUIController
 +(SBUIController *)sharedInstance;
@@ -7,11 +8,9 @@
 -(void)dismissSwitcherAnimated:(BOOL)fp8;
 -(void)dismissSwitcher;
 -(void)_toggleSwitcher;
-- (BOOL)activateSwitcher;
 - (void)programmaticSwitchAppGestureMoveToLeft;
 - (void)programmaticSwitchAppGestureMoveToRight;
 -(BOOL)respondsToSelector:(SEL)fp8;
--(void)performSelectorOnMainThread:(SEL)fp8 withObject:(id)fp12 waitUntilDone:(BOOL)fp16;
 @end
 
 @interface SBBulletinListController
@@ -21,6 +20,51 @@
 -(void)showListViewAnimated:(BOOL)fp8;
 @end
 
+@interface SBWiFiManager 
++ (id)sharedInstance;
+-(BOOL)wiFiEnabled;
+-(void)setWiFiEnabled:(BOOL)enabled;
+@end
+
+@interface SBMediaController
++ (id)sharedInstance;
+- (BOOL)isRingerMuted;
+- (void)setRingerMuted:(BOOL)fp8;
+@end
+
+@interface SBTelephonyManager
++ (id)sharedTelephonyManager;
+- (BOOL)isInAirplaneMode;
+- (void)setIsInAirplaneMode:(BOOL)fp8;
+@end
+
+@interface BluetoothManager
++ (id)sharedInstance;
+- (BOOL)enabled;
+- (BOOL)setPowered:(BOOL)arg1;
+- (BOOL)setEnabled:(BOOL)arg1;
+@end
+
+@interface SBRingerHUDController
++ (void)activate:(BOOL)fp8;
+@end
+
+@interface SBOrientationLockManager
++(id)sharedInstance;
+-(void)lock;
+-(void)unlock;
+-(BOOL)isLocked;
+@end
+
+@interface CLLocationManager
++(BOOL)locationServicesEnabled;
++(void)setLocationServicesEnabled:(BOOL)fp8;
+@end
+
+@interface SBBrightnessController
++ (id)sharedBrightnessController;
+- (void)_setBrightnessLevel:(float)fp8 showHUD:(BOOL)fp12;
+@end
 
 @interface BeeKeyboard
 +(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Global:(BOOL)global;
@@ -56,42 +100,6 @@ static BeeGlobalBasic* instance;
     return self;
 }
 
--(void)homeButtonDown
-{
-    struct GSEventRecord record;
-	memset(&record, 0, sizeof(record));
-	record.type = kGSEventMenuButtonDown;
-	record.timestamp = GSCurrentEventTimestamp();
-	GSSendSystemEvent(&record);
-}
-
--(void)homeButtonUp
-{
-    struct GSEventRecord record;
-	memset(&record, 0, sizeof(record));
-	record.type = kGSEventMenuButtonUp;
-    //record.timestamp = GSCurrentEventTimestamp();
-	GSSendSystemEvent(&record);
-}
-
--(void)lockButtonDown
-{
-    struct GSEventRecord record;
-	memset(&record, 0, sizeof(record));
-	record.type = kGSEventLockButtonDown;
-	record.timestamp = GSCurrentEventTimestamp();
-	GSSendSystemEvent(&record);
-}
-
--(void)lockButtonUp
-{
-    struct GSEventRecord record;
-	memset(&record, 0, sizeof(record));
-	record.type = kGSEventLockButtonUp;
-    //record.timestamp = GSCurrentEventTimestamp();
-	GSSendSystemEvent(&record);
-}
-
 -(void)unlockActivateNC
 {
     lockNC = NO;
@@ -125,7 +133,49 @@ static BeeGlobalBasic* instance;
     }
 }
 
--(void)activateSwitcher
+
+@end
+
+static BOOL homePressing;
+
+
+void homeButtonDown()
+{
+    struct GSEventRecord record;
+    memset(&record, 0, sizeof(record));
+    record.type = kGSEventMenuButtonDown;
+    record.timestamp = GSCurrentEventTimestamp();
+    GSSendSystemEvent(&record);
+}
+
+void homeButtonUp()
+{
+    struct GSEventRecord record;
+    memset(&record, 0, sizeof(record));
+    record.type = kGSEventMenuButtonUp;
+    //record.timestamp = GSCurrentEventTimestamp();
+    GSSendSystemEvent(&record);
+}
+
+void lockButtonDown()
+{
+    struct GSEventRecord record;
+    memset(&record, 0, sizeof(record));
+    record.type = kGSEventLockButtonDown;
+    record.timestamp = GSCurrentEventTimestamp();
+    GSSendSystemEvent(&record);
+}
+
+void lockButtonUp()
+{
+    struct GSEventRecord record;
+    memset(&record, 0, sizeof(record));
+    record.type = kGSEventLockButtonUp;
+    //record.timestamp = GSCurrentEventTimestamp();
+    GSSendSystemEvent(&record);
+}
+
+void activateSwitcher()
 {
     SBUIController *SBUI = (SBUIController *)[objc_getClass("SBUIController") sharedInstance];
     BOOL isA = [SBUI isSwitcherShowing];
@@ -139,19 +189,47 @@ static BeeGlobalBasic* instance;
             return;
         }
     }else {
-        //[SBUI _toggleSwitcher];
-        [SBUI performSelectorOnMainThread:@selector(_toggleSwitcher) withObject:nil waitUntilDone:YES];
+        [SBUI _toggleSwitcher];
         
         return;
     }
 }
 
+BOOL toggles(id _event)
+{
+    NSString* event = _event;
+    if ([event isEqualToString:@"toggleWifi"]) {
+        id wiMgr = [objc_getClass("SBWiFiManager") sharedInstance];
+        BOOL cSet = [wiMgr wiFiEnabled];
+        [wiMgr setWiFiEnabled:!cSet];
+    }else if ([event isEqualToString:@"toggleBluetooth"]) {
+        BluetoothManager* btMgr = (BluetoothManager *)[objc_getClass("BluetoothManager") sharedInstance];
+        BOOL cSet = [btMgr enabled];
+        [btMgr setEnabled:!cSet];
+        [btMgr setPowered:!cSet];
+    }else if ([event isEqualToString:@"toggleMute"]) {
+        id cSI = [objc_getClass("SBMediaController") sharedInstance];
+        BOOL cSet = [cSI isRingerMuted]; //0 ring 1 mute
+        [objc_getClass("SBRingerHUDController") activate:cSet]; // 0 mute 1 ring
+        [cSI setRingerMuted:!cSet];
+    }else if ([event isEqualToString:@"toggleRotation"]) {
+        id olMgr = [objc_getClass("SBOrientationLockManager") sharedInstance];
+        BOOL cSet = [olMgr isLocked];
+        if (cSet) [olMgr unlock];
+        else [olMgr lock];
+    }else if ([event isEqualToString:@"toggleAirplain"]) {
+        id olMgr = [objc_getClass("SBTelephonyManager") sharedTelephonyManager];
+        BOOL cSet = [olMgr isInAirplaneMode];
+        [[objc_getClass("SBTelephonyManager") sharedTelephonyManager] setIsInAirplaneMode:!cSet];
+    }else if ([event isEqualToString:@"toggleLocation"]) {
+        id Mgr = objc_getClass("CLLocationManager");
+        BOOL cSet = [Mgr locationServicesEnabled];
+        [Mgr setLocationServicesEnabled:!cSet];
+    }
+    
+    return NO;
+}
 
-
-@end
-
-
-static BOOL homePressing;
 
 int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
 {
@@ -171,49 +249,72 @@ int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
             if ((!keyDown && keyCode == hKeyCode) ||
                 ((modStat & hModStat) != hModStat)) {
                 homePressing = NO;
-                [[BeeGlobalBasic sharedInstance] homeButtonUp];
+                homeButtonUp();
                 
                 return 2;
             }
         }
     }
-    //NSString* keyString = [NSString stringWithFormat:@"%d.%d.%d", usagePage, modStat, keyCode];
     NSString* event = [objc_getClass("BeeKeyboard") eventFromKeyCode:keyCode Mod:modStat UsagePage:usagePage AddonName:@"Basic" Table:@"basic" Global:YES];
 
-    if ([event isEqualToString:@"Home"]) {
-        if (keyDown) {
+    if (keyDown) {
+        if ([event isEqualToString:@"Home"]) {
+            
             if (homePressing) {
-                [[BeeGlobalBasic sharedInstance] homeButtonUp];
+                homeButtonUp();
             }
             homePressing = YES;
-            [[BeeGlobalBasic sharedInstance] homeButtonDown];
-        }
-        return 2;
-    }else if ([event isEqualToString:@"Switcher"] || [event isEqualToString:@"Switcher2"]) {
-        if (keyDown) {
-            [[BeeGlobalBasic sharedInstance] activateSwitcher];
-        }
-        return 2;
-    }else if ([event isEqualToString:@"NotiCenter"] || [event isEqualToString:@"NotiCenter2"]) {
-        if (keyDown) {
+            homeButtonDown();
+            return 2;
+        }else if ([event isEqualToString:@"Switcher"] || [event isEqualToString:@"Switcher2"]) {
+            
+            activateSwitcher();
+            
+            return 2;
+        }else if ([event isEqualToString:@"NotiCenter"] || [event isEqualToString:@"NotiCenter2"]) {
+            
             [[BeeGlobalBasic sharedInstance] activateNC];
-        }
-        return 2;
-    }else if ([event isEqualToString:@"AppLeft"]) {
-        if (keyDown) {
+            
+            return 2;
+        }else if ([event isEqualToString:@"AppLeft"]) {
+            
             id uic = [objc_getClass("SBUIController") sharedInstance];
             if ([uic respondsToSelector:@selector(programmaticSwitchAppGestureMoveToLeft)])
                 [uic programmaticSwitchAppGestureMoveToLeft];
-        }
-        return 2;
-    }else if ([event isEqualToString:@"AppRight"]) {
-        if (keyDown) {
+            
+            return 2;
+        }else if ([event isEqualToString:@"AppRight"]) {
+            
             id uic = [objc_getClass("SBUIController") sharedInstance];
             if ([uic respondsToSelector:@selector(programmaticSwitchAppGestureMoveToRight)])
                 [uic programmaticSwitchAppGestureMoveToRight];
+            
+            return 2; 
+        }else if ([event isEqualToString:@"BrightUp"]) {
+            float cBright;
+            float nBright;
+            cBright = [(SpringBoard *)[UIApplication sharedApplication] currentBacklightLevel];
+            nBright = cBright <= 0.9f ? cBright + 0.1f : 1.0f;
+            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright];
+            [[objc_getClass("SBBrightnessController") sharedBrightnessController] _setBrightnessLevel:nBright showHUD:YES];
+            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
+            
+            return 2; 
+        }else if ([event isEqualToString:@"BrightDown"]) {
+            float cBright;
+            float nBright;
+            cBright = [(SpringBoard *)[UIApplication sharedApplication] currentBacklightLevel];
+            nBright = cBright >= 0.1f ? cBright - 0.1f : 0.0f;
+            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright];
+            [[objc_getClass("SBBrightnessController") sharedBrightnessController] _setBrightnessLevel:nBright showHUD:YES];
+            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
+            
+            return 2; 
+        }else if ([event hasPrefix:@"toggle"]) {
+            if (toggles(event)) return 2;
         }
-        return 2; 
     }
+    
     
     return 0;
 }

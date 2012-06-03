@@ -76,7 +76,7 @@ static BeeBasic* instance;
         }
     }
 }
-
+/*
 -(UIAlertView *)topAlertView
 {
     for (UIWindow* tW in [[UIApplication sharedApplication] windows]) {
@@ -90,9 +90,9 @@ static BeeBasic* instance;
                     continue;
                 }
             }
-        }/*else if ([tW isKindOfClass:objc_getClass("_UIAlertOverlayWindow")]) {
+        }//else if ([tW isKindOfClass:objc_getClass("_UIAlertOverlayWindow")]) {
           //ActionSheet
-          }*/
+          //}
     }
     
     return nil;
@@ -105,7 +105,7 @@ static BeeBasic* instance;
     //id cButton = [rAlert buttonAtIndex:[rAlert cancelButtonIndex]];
     //[rAlert _buttonClicked:cButton];
     
-}
+}*/
 
 @end
 
@@ -113,7 +113,6 @@ static BeeBasic* instance;
 int keyEvent(int keyCode, int modStat, BOOL keyDown) 
 {
     if (keyDown) {
-        //NSString* keyString = [NSString stringWithFormat:@"7.%d.%d", modStat, keyCode];
         NSString* event = [objc_getClass("BeeKeyboard") eventFromKeyCode:keyCode Mod:modStat UsagePage:7 AddonName:@"Basic" Table:@"basic" Global:NO];
         
         if ([event isEqualToString:@"QuitApp"]) {
@@ -121,15 +120,8 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
             return 1;
         }else {
             
-            if (keyCode == 41) {
-                [[BeeBasic sharedInstance] Escape];
-                
-                if ([[BeeBasic sharedInstance] topAlertView] != nil) return 1;
-                else return 0;
-            }   
         }
     }
-    
     
     return 0;
 }
