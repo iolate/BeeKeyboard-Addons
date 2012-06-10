@@ -153,10 +153,10 @@ void homeButtonUp()
     struct GSEventRecord record;
     memset(&record, 0, sizeof(record));
     record.type = kGSEventMenuButtonUp;
-    //record.timestamp = GSCurrentEventTimestamp();
+    record.timestamp = GSCurrentEventTimestamp();
     GSSendSystemEvent(&record);
 }
-
+/*
 void lockButtonDown()
 {
     struct GSEventRecord record;
@@ -171,9 +171,10 @@ void lockButtonUp()
     struct GSEventRecord record;
     memset(&record, 0, sizeof(record));
     record.type = kGSEventLockButtonUp;
-    //record.timestamp = GSCurrentEventTimestamp();
+    record.timestamp = GSCurrentEventTimestamp();
     GSSendSystemEvent(&record);
 }
+*/
 
 void activateSwitcher()
 {

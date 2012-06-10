@@ -20,6 +20,18 @@
 			<key>cell</key>
 			<string>BInputKeyCell</string>
 		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.8.43</string>
+			<key>key</key>
+			<string>TabControl</string>
+			<key>label</key>
+			<string>Next Control</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
 	</array>
 	<key>title</key>
 	<string>Basic - App</string>
