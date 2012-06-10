@@ -21,6 +21,14 @@
 			<string>BInputKeyCell</string>
 		</dict>
 		<dict>
+			<key>label</key>
+			<string>Controls</string>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>4 arrows and Click work only with selected control.</string>
+		</dict>
+		<dict>
 			<key>defaults</key>
 			<string>blueteeth/basic</string>
 			<key>default</key>
@@ -28,7 +36,91 @@
 			<key>key</key>
 			<string>TabControl</string>
 			<key>label</key>
-			<string>Next Control</string>
+			<string>Next</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.12.43</string>
+			<key>key</key>
+			<string>TabControlPrev</string>
+			<key>label</key>
+			<string>Previous</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.8.41</string>
+			<key>key</key>
+			<string>RemoveControlFrame</string>
+			<key>label</key>
+			<string>Remove Frame</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.0.44</string>
+			<key>key</key>
+			<string>ControlClick</string>
+			<key>label</key>
+			<string>Click</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.0.79</string>
+			<key>key</key>
+			<string>Control_RIGHT</string>
+			<key>label</key>
+			<string>Right</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.0.80</string>
+			<key>key</key>
+			<string>Control_LEFT</string>
+			<key>label</key>
+			<string>Left</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.0.82</string>
+			<key>key</key>
+			<string>Control_UP</string>
+			<key>label</key>
+			<string>Up / Increase</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>blueteeth/basic</string>
+			<key>default</key>
+			<string>7.0.81</string>
+			<key>key</key>
+			<string>Control_DOWN</string>
+			<key>label</key>
+			<string>Down / Decrease</string>
 			<key>cell</key>
 			<string>BInputKeyCell</string>
 		</dict>
