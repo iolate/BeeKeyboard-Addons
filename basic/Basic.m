@@ -1,14 +1,17 @@
 #import <UIKit/UIKit.h>
 #import <UIkit/UIAccessibilityElement.h>
-#define LS(a) a
-#define SETTING_FILE @"/var/mobile/Library/Preferences/blueteeth/basic.plist"
+
+#define SETTING_FILE @"/var/mobile/Library/Preferences/BeeKeyboard/basic.plist"
 #include <objc/runtime.h>
 #import <QuartzCore/CAWindowServer.h>
 #import <QuartzCore/CAWindowServerDisplay.h>
 #import <CoreGraphics/CGGeometry.h>
 #import <GraphicsServices/GraphicsServices.h>
-
 #import "FakeTouch.h"
+
+#define ADDON_BUNDLE [NSBundle bundleWithPath:@"/Library/Application Support/BeeKeyboard/Addons/Basic.bundle"]
+#define LOCALIZED_TABLE_NAME @"Basic"
+#define LS(a) [ADDON_BUNDLE localizedStringForKey:a value:a table: LOCALIZED_TABLE_NAME]
 
 #pragma mark - interfaces
 @interface BeeKeyboard

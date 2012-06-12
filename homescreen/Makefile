@@ -12,7 +12,7 @@ include $(THEOS_MAKE_PATH)/library.mk
 
 ri:: all internal-ri after-ri
 internal-ri::
-	ssh root@$(FW_DEVICE_IP) "rm /Library/Application\ Support/Blueteeth/KeyboardAddons/$(LIBRARY_NAME).dylib"
-	scp "$(FW_PROJECT_DIR)/.theos/obj/$(LIBRARY_NAME).dylib" "root@$(FW_DEVICE_IP):/Library/Application\ Support/Blueteeth/KeyboardAddons/"
+	ssh root@$(FW_DEVICE_IP) "rm /Library/Application\ Support/BeeKeyboard/Addons/$(LIBRARY_NAME).bundle/$(LIBRARY_NAME).dylib"
+	scp "$(FW_PROJECT_DIR)/.theos/obj/$(LIBRARY_NAME).dylib" "root@$(FW_DEVICE_IP):/Library/Application\ Support/BeeKeyboard/Addons/$(LIBRARY_NAME).bundle/"
 after-ri::
 	ssh root@$(FW_DEVICE_IP) "killall -9 SpringBoard"

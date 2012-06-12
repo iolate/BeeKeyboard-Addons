@@ -1,0 +1,11 @@
+"Quit App" = "앱 종료";
+"Controls" = "컨트롤";
+"Next" = "다음";
+"Previous" = "이전";
+"Remove Frame" = "프레임 숨기기";
+"Click" = "터치(클릭)";
+"Right" = "오른쪽으로";
+"Left" = "왼쪽으로";
+"Up / Increase" = "위로 / 증가";
+"Down / Decrease" = "아래로 / 감소";
+"DESCRIPTION" = "4방향과 터치이벤트는 컨트롤이 선택되었을 때에만 작동합니다.";

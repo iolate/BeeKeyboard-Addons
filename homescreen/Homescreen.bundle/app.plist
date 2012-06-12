@@ -12,7 +12,7 @@
 		</dict>
 		<dict>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>default</key>
 			<string>7.2.79</string>
 			<key>key</key>
@@ -24,7 +24,7 @@
 		</dict>
 		<dict>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>default</key>
 			<string>7.2.80</string>
 			<key>key</key>
@@ -38,7 +38,7 @@
 			<key>default</key>
 			<string>7.0.39</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Spotlight</string>
 			<key>cell</key>
@@ -50,7 +50,7 @@
 			<key>default</key>
 			<string>7.0.30</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page1</string>
 			<key>cell</key>
@@ -62,7 +62,7 @@
 			<key>default</key>
 			<string>7.0.31</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page2</string>
 			<key>cell</key>
@@ -74,7 +74,7 @@
 			<key>default</key>
 			<string>7.0.32</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page3</string>
 			<key>cell</key>
@@ -86,7 +86,7 @@
 			<key>default</key>
 			<string>7.0.33</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page4</string>
 			<key>cell</key>
@@ -98,7 +98,7 @@
 			<key>default</key>
 			<string>7.0.34</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page5</string>
 			<key>cell</key>
@@ -110,7 +110,7 @@
 			<key>default</key>
 			<string>7.0.35</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page6</string>
 			<key>cell</key>
@@ -122,7 +122,7 @@
 			<key>default</key>
 			<string>7.0.36</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page7</string>
 			<key>cell</key>
@@ -134,7 +134,7 @@
 			<key>default</key>
 			<string>7.0.37</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page8</string>
 			<key>cell</key>
@@ -146,7 +146,7 @@
 			<key>default</key>
 			<string>7.0.38</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>Page9</string>
 			<key>cell</key>
@@ -164,7 +164,7 @@
 			<key>default</key>
 			<string>7.0.79</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>IconMoveRight</string>
 			<key>cell</key>
@@ -176,7 +176,7 @@
 			<key>default</key>
 			<string>7.0.80</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>IconMoveLeft</string>
 			<key>cell</key>
@@ -188,7 +188,7 @@
 			<key>default</key>
 			<string>7.0.81</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>IconMoveDown</string>
 			<key>cell</key>
@@ -200,7 +200,7 @@
 			<key>default</key>
 			<string>7.0.82</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>IconMoveUp</string>
 			<key>cell</key>
@@ -212,7 +212,7 @@
 			<key>default</key>
 			<string>7.0.40</string>
 			<key>defaults</key>
-			<string>blueteeth/homescreen</string>
+			<string>BeeKeyboard/homescreen</string>
 			<key>key</key>
 			<string>LaunchApp</string>
 			<key>cell</key>

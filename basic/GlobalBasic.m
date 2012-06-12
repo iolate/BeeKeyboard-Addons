@@ -218,7 +218,7 @@ BOOL toggles(id _event)
         BOOL cSet = [olMgr isLocked];
         if (cSet) [olMgr unlock];
         else [olMgr lock];
-    }else if ([event isEqualToString:@"toggleAirplain"]) {
+    }else if ([event isEqualToString:@"toggleAirplane"]) {
         id olMgr = [objc_getClass("SBTelephonyManager") sharedTelephonyManager];
         BOOL cSet = [olMgr isInAirplaneMode];
         [[objc_getClass("SBTelephonyManager") sharedTelephonyManager] setIsInAirplaneMode:!cSet];
