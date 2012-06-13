@@ -1,4 +1,7 @@
 //FakeTouch
+//http://cocoawithlove.com/2008/10/synthesizing-touch-event-on-iphone.html
+
+#import <UIKit/UIKit.h>
 
 @interface GSEventProxy : NSObject
 {

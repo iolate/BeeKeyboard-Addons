@@ -1,14 +1,5 @@
 #import <UIKit/UIKit.h>
-#import <QuartzCore/CALayer.h>
-
-@interface SpringBoard
-- (id)_accessibilityFrontMostApplication;
-@end
-
-@interface SBUIController
-+(SBUIController *)sharedInstance;
--(BOOL)respondsToSelector:(SEL)fp8;
-@end
+#import "BeeKeyboard.h";
 
 @class SBIconListView;
 
@@ -49,11 +40,6 @@
 - (BOOL)isLocked; //just Locked
 @end
 
-@interface BeeKeyboard
-+(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Global:(BOOL)global;
-+(NSString *)eventFromKeyCode:(int)keyCode Mod:(int)modStat UsagePage:(int)uP AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
-@end
-
 static int jitterIndex = -1;
 static BOOL inDock = FALSE;
 static id oListView = nil;
@@ -84,7 +70,7 @@ BOOL moveSBPage(id _event)
     }else if ([event isEqualToString:@"Page9"]) {
         page = 9;
     }else return NO;
-
+    
     
     SBAwayController* SBAC = (SBAwayController *)[objc_getClass("SBAwayController") sharedAwayController];
     if ([SBAC isLocked]) return NO;
@@ -333,7 +319,7 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
         }else if ([event hasPrefix:@"Page"]) {
             if (moveSBPage(event)) return 1;
         }
-    
+        
     }
     
     return 0;

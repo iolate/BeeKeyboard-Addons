@@ -1,7 +1,5 @@
 //http://cocoawithlove.com/2008/10/synthesizing-touch-event-on-iphone.html
 
-
-#import <UIKit/UIKit.h>
 #import "FakeTouch.h"
 
 @implementation GSEventProxy
@@ -106,35 +104,3 @@
 
 
 @end
-
-/*
-void performTouchInView(id view)
-{
-    UITouch *touch = [[UITouch alloc] initInView:view];
-	UIEvent *eventDown = [[UIEvent alloc] initWithTouch:touch];
-	
-    [[UIApplication sharedApplication] sendEvent:eventDown];
-    
-    [touch setPhase:UITouchPhaseEnded];
-	UIEvent *eventUp = [[UIEvent alloc] initWithTouch:touch];
-    [[UIApplication sharedApplication] sendEvent:eventUp];
-    
-    [eventDown release];
-	[eventUp release];
-	[touch release];
- */
-
-    /*
-	[touch.view touchesBegan:[eventDown allTouches] withEvent:eventDown];
-	
-	[touch setPhase:UITouchPhaseEnded];
-	UIEvent *eventUp = [[UIEvent alloc] initWithTouch:touch];
-	
-	[touch.view touchesEnded:[eventUp allTouches] withEvent:eventUp];
-	
-	[eventDown release];
-	[eventUp release];
-	[touch release];*/
-/*
-}
-*/

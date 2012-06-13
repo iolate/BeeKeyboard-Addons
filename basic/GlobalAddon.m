@@ -1,6 +1,13 @@
+#import "BeeKeyboard.h";
 #import <UIKit/UIKit.h>
 #import <GraphicsServices/GSEvent.h>
-#import <_SpringBoard/SpringBoard.h>
+
+@interface UIApplication (SpringBoard)
+- (void)setBacklightLevel:(float)fp8;
+- (void)setBacklightLevel:(float)fp8 permanently:(BOOL)fp12;
+- (float)currentBacklightLevel;
+@end
+
 
 @interface SBUIController
 +(SBUIController *)sharedInstance;
@@ -64,11 +71,6 @@
 @interface SBBrightnessController
 + (id)sharedBrightnessController;
 - (void)_setBrightnessLevel:(float)fp8 showHUD:(BOOL)fp12;
-@end
-
-@interface BeeKeyboard
-+(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Global:(BOOL)global;
-+(NSString *)eventFromKeyCode:(int)keyCode Mod:(int)modStat UsagePage:(int)uP AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
 @end
 
 @interface BeeGlobalBasic : NSObject
@@ -137,7 +139,6 @@ static BeeGlobalBasic* instance;
 @end
 
 static BOOL homePressing;
-
 
 void homeButtonDown()
 {
@@ -231,7 +232,6 @@ BOOL toggles(id _event)
     return NO;
 }
 
-
 int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
 {
     if (homePressing) {
@@ -294,21 +294,21 @@ int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
         }else if ([event isEqualToString:@"BrightUp"]) {
             float cBright;
             float nBright;
-            cBright = [(SpringBoard *)[UIApplication sharedApplication] currentBacklightLevel];
+            cBright = [[UIApplication sharedApplication] currentBacklightLevel];
             nBright = cBright <= 0.9f ? cBright + 0.1f : 1.0f;
-            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright];
+            [[UIApplication sharedApplication] setBacklightLevel:nBright];
             [[objc_getClass("SBBrightnessController") sharedBrightnessController] _setBrightnessLevel:nBright showHUD:YES];
-            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
+            [[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
             
             return 2; 
         }else if ([event isEqualToString:@"BrightDown"]) {
             float cBright;
             float nBright;
-            cBright = [(SpringBoard *)[UIApplication sharedApplication] currentBacklightLevel];
+            cBright = [[UIApplication sharedApplication] currentBacklightLevel];
             nBright = cBright >= 0.1f ? cBright - 0.1f : 0.0f;
-            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright];
+            [[UIApplication sharedApplication] setBacklightLevel:nBright];
             [[objc_getClass("SBBrightnessController") sharedBrightnessController] _setBrightnessLevel:nBright showHUD:YES];
-            [(SpringBoard *)[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
+            [[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
             
             return 2; 
         }else if ([event hasPrefix:@"toggle"]) {

@@ -1,12 +1,7 @@
-#import <UIKit/UIKit.h>
-#import <UIkit/UIAccessibilityElement.h>
+#define SCROLL_VALUE 100
 
-#define SETTING_FILE @"/var/mobile/Library/Preferences/BeeKeyboard/basic.plist"
-#include <objc/runtime.h>
-#import <QuartzCore/CAWindowServer.h>
-#import <QuartzCore/CAWindowServerDisplay.h>
-#import <CoreGraphics/CGGeometry.h>
-#import <GraphicsServices/GraphicsServices.h>
+#import <UIKit/UIKit.h>
+#import "BeeKeyboard.h";
 #import "FakeTouch.h"
 
 #define ADDON_BUNDLE [NSBundle bundleWithPath:@"/Library/Application Support/BeeKeyboard/Addons/Basic.bundle"]
@@ -14,14 +9,12 @@
 #define LS(a) [ADDON_BUNDLE localizedStringForKey:a value:a table: LOCALIZED_TABLE_NAME]
 
 #pragma mark - interfaces
-@interface BeeKeyboard
-+(NSString *)keyFromEvent:(NSString *)event AddonName:(NSString *)addonName Global:(BOOL)global;
-+(NSString *)eventFromKeyCode:(int)keyCode Mod:(int)modStat UsagePage:(int)uP AddonName:(NSString *)addonName Table:(NSString *)table Global:(BOOL)global;
-
+@interface BeeKeyboard (FrameView)
 +(void)performSelectorOnMainThread:(SEL)fp8 withObject:(id)fp12 waitUntilDone:(BOOL)fp16;
 +(UIView *)framedView;
 +(void)showElementFrame:(UIView *)view;
 @end
+
 
 @interface UIView (FixedApi)
 // http://stackoverflow.com/a/2596519
@@ -40,6 +33,7 @@
     }
 }
 @end
+
 
 #pragma mark - BeeBasicClass
 
@@ -164,12 +158,12 @@ id controlsInWindow()
     NSMutableArray* controls = [[NSMutableArray alloc] init];
     
     findControl([[UIApplication sharedApplication] keyWindow], controls);
-
+    
     /*
-    for (UIWindow* window in [[UIApplication sharedApplication] windows])
-    {
-        findControl(window, controls);
-    }*/
+     for (UIWindow* window in [[UIApplication sharedApplication] windows])
+     {
+     findControl(window, controls);
+     }*/
     
     return controls;
 }
@@ -257,7 +251,7 @@ void tabControls (BOOL rightDir)
 void controlValue(id view, int dir)
 {
     //right left down up
- 
+    
     if (keyOnDown) {
         keyOnDown = NO;
         return;
@@ -291,13 +285,11 @@ void controlValue(id view, int dir)
                     }
                 }
             });
-                    
+            
             
         }
     } else if ([view isKindOfClass:[UIScrollView class]]) {
         UIScrollView* scroll = view;
-        
-#define SCROLL_VALUE 100
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             BOOL firstCheck = NO;
@@ -353,7 +345,7 @@ void controlValue(id view, int dir)
         
     }
     
-
+    
 }
 
 #pragma mark - process key event
@@ -362,7 +354,7 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
 {
     NSString* event = [objc_getClass("BeeKeyboard") eventFromKeyCode:keyCode Mod:modStat UsagePage:7 AddonName:@"Basic" Table:@"basic" Global:NO];
     BOOL isApp = ![[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.springboard"];
-         
+    
     if (keyDown) {
         if ([event isEqualToString:@"QuitApp"]) {
             [[BeeBasic sharedInstance] quitApp];
