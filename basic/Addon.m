@@ -13,6 +13,7 @@
 +(void)performSelectorOnMainThread:(SEL)fp8 withObject:(id)fp12 waitUntilDone:(BOOL)fp16;
 +(UIView *)framedView;
 +(void)showElementFrame:(UIView *)view;
++(BOOL)isFramed;
 @end
 
 
@@ -308,6 +309,7 @@ void controlValue(id view, int dir)
                     if (newOffset > right) newOffset = right;
                     
                     [scroll setContentOffset:CGPointMake(newOffset,scroll.contentOffset.y) animated:YES];
+                    
                 }else if (dir == 2) {
                     CGFloat currentOffset = scroll.contentOffset.x;
                     CGFloat newOffset = currentOffset - SCROLL_VALUE;
@@ -328,7 +330,6 @@ void controlValue(id view, int dir)
                     CGFloat currentOffset = scroll.contentOffset.y;
                     CGFloat newOffset = currentOffset - SCROLL_VALUE;
                     if (newOffset < 0) newOffset = 0;
-                    
                     [scroll setContentOffset:CGPointMake(scroll.contentOffset.x, newOffset) animated:YES];
                 }
                 
@@ -403,9 +404,10 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
         }else if ([event isEqualToString:@"Control_RIGHT"] && isApp) {
             NSArray* controls = controlsInWindow();
             
-            if (tabCount != -1 && tabCount < [controls count]) {
+            if (tabCount != -1 && tabCount < [controls count] && [objc_getClass("BeeKeyboard") isFramed]) {
                 UIView* con = [controls objectAtIndex:tabCount];
-                if ([objc_getClass("BeeKeyboard") framedView] == nil || ![con isEqual:selectedControl] || ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
+                
+                if (![con isEqual:selectedControl] && ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
                 
                 controlValue(con, 1);
                 
@@ -418,9 +420,10 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
         }else if ([event isEqualToString:@"Control_LEFT"] && isApp) {
             NSArray* controls = controlsInWindow();
             
-            if (tabCount != -1 && tabCount < [controls count]) {
+            if (tabCount != -1 && tabCount < [controls count] && [objc_getClass("BeeKeyboard") isFramed]) {
                 UIView* con = [controls objectAtIndex:tabCount];
-                if ([objc_getClass("BeeKeyboard") framedView] == nil || ![con isEqual:selectedControl] || ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
+                
+                if (![con isEqual:selectedControl] && ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
                 
                 controlValue(con, 2);
                 
@@ -433,9 +436,10 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
         }else if ([event isEqualToString:@"Control_DOWN"] && isApp) {
             NSArray* controls = controlsInWindow();
             
-            if (tabCount != -1 && tabCount < [controls count]) {
+            if (tabCount != -1 && tabCount < [controls count] && [objc_getClass("BeeKeyboard") isFramed]) {
                 UIView* con = [controls objectAtIndex:tabCount];
-                if ([objc_getClass("BeeKeyboard") framedView] == nil || ![con isEqual:selectedControl] || ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
+
+                if (![con isEqual:selectedControl] && ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
                 
                 controlValue(con, 3);
                 
@@ -448,9 +452,10 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
         }else if ([event isEqualToString:@"Control_UP"] && isApp) {
             NSArray* controls = controlsInWindow();
             
-            if (tabCount != -1 && tabCount < [controls count]) {
+            if (tabCount != -1 && tabCount < [controls count] && [objc_getClass("BeeKeyboard") isFramed]) {
                 UIView* con = [controls objectAtIndex:tabCount];
-                if ([objc_getClass("BeeKeyboard") framedView] == nil || ![con isEqual:selectedControl] || ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
+                
+                if (![con isEqual:selectedControl] && ![con isEqual:[objc_getClass("BeeKeyboard") framedView]]) return 0;
                 
                 controlValue(con, 4);
                 
