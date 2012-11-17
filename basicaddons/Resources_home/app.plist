@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Move Page</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>default</key>
+			<string>7.2.79</string>
+			<key>key</key>
+			<string>MoveRight</string>
+			<key>label</key>
+			<string>To right</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>default</key>
+			<string>7.2.80</string>
+			<key>key</key>
+			<string>MoveLeft</string>
+			<key>label</key>
+			<string>To left</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.39</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Spotlight</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Spotlight</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.30</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page1</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 1</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.31</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page2</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 2</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.32</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page3</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 3</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.33</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page4</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 4</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.34</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page5</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 5</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.35</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page6</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 6</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.36</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page7</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 7</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.37</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page8</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 8</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.38</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>Page9</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Page 9</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Launch Applications</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.79</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>IconMoveRight</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Move Icon →</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.80</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>IconMoveLeft</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Move Icon ←</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.81</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>IconMoveDown</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Move Icon ↓</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.82</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>IconMoveUp</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Move Icon ↑</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>7.0.40</string>
+			<key>defaults</key>
+			<string>BeeKeyboard/homescreen</string>
+			<key>key</key>
+			<string>LaunchApp</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+			<key>label</key>
+			<string>Launch Selected</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>Homescreen</string>
+</dict>
+</plist>
