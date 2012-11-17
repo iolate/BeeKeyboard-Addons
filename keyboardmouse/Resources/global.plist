@@ -1,0 +1,47 @@
+{
+	items = (
+		{
+			defaults = "BeeKeyboard/KeyboardMouse";
+			default = "";
+			key = Toggle;
+			label = MouseToggle;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/KeyboardMouse";
+			default = "";
+			key = MoveRight;
+			label = Right;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/KeyboardMouse";
+			default = "";
+			key = MoveLeft;
+			label = Left;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/KeyboardMouse";
+			default = "";
+			key = MoveDown;
+			label = Down;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/KeyboardMouse";
+			default = "";
+			key = MoveUp;
+			label = Up;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/KeyboardMouse";
+			default = "";
+			key = Click;
+			label = Click;
+			cell = BInputKeyCell;
+		},
+	);
+	title = KeyboardMouse;
+}
