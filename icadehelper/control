@@ -1,0 +1,9 @@
+Package: kr.iolate.beeaddon.icadehelper
+Name: iCADEHelper
+Depends: kr.iolate.beekeyboard, AppList
+Version: 0.1
+Architecture: iphoneos-arm
+Description: iCADEHelper for BeeKeyboard. You can control games which support iCade such as Temple run or iMame4.
+Maintainer: iolate
+Author: iolate
+Section: Addons (BeeKeyboard)

@@ -1,0 +1,135 @@
+{
+	items = (
+		{
+			footerText = "Default: FALSE";
+			label = Use;
+			cell = PSGroupCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "";
+			key = iCadeToggle;
+			label = Toggle;
+			cell = BInputKeyCell;
+		},
+		{
+			bundle = AppList;
+			cell = PSLinkCell;
+			isController = 1;
+			label = "Auto on Apps";
+			ALSettingsPath = "/var/mobile/Library/Preferences/BeeKeyboard/iCADEHelper-filter.plist";
+			ALSettingsKeyPrefix = "";
+			ALChangeNotification = "beekeyboard/reloadAddons";
+			ALAllowsSelection = 1;
+			ALSectionDescriptors = (
+				{
+					title = "User Applications";
+					predicate = "isSystemApplication = FALSE";
+					"cell-class-name" = ALSwitchCell;
+					"icon-size" = 29;
+					"suppress-hidden-apps" = 1;
+				},
+				{
+					title = "System Applications";
+					predicate = "isSystemApplication = TRUE";
+					"cell-class-name" = ALSwitchCell;
+					"icon-size" = 29;
+					"suppress-hidden-apps" = 1;
+				},
+			);
+		},
+		{
+			label = Stick;
+			cell = PSGroupCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.82";
+			key = stickUp;
+			label = Up;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.81";
+			key = stickDown;
+			label = Down;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.79";
+			key = stickRight;
+			label = Right;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.80";
+			key = stickLeft;
+			label = Left;
+			cell = BInputKeyCell;
+		},
+		{
+			label = Buttons;
+			cell = PSGroupCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.13";
+			key = buttonA;
+			label = A;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.17";
+			key = buttonB;
+			label = B;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.14";
+			key = buttonC;
+			label = C;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.16";
+			key = buttonD;
+			label = D;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.15";
+			key = buttonE;
+			label = E;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.54";
+			key = buttonF;
+			label = F;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.51";
+			key = buttonG;
+			label = G;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/iCADEHelper";
+			default = "7.0.55";
+			key = buttonH;
+			label = H;
+			cell = BInputKeyCell;
+		},
+	);
+	title = iCADEHelper;
+}
