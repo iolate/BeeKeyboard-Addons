@@ -1,9 +1,0 @@
-Package: kr.iolate.beeaddon.homescreen
-Name: Homescreen
-Depends: kr.iolate.beekeyboard
-Version: 0.0.1
-Architecture: iphoneos-arm
-Description: Addon for BeeKeyboard!
-Maintainer: iolate
-Author: iolate
-Section: Addons (BeeKeyboard)
