@@ -2,13 +2,17 @@ export FW_DEVICE_IP = 10.0.1.3
 
 include theos/makefiles/common.mk
 
+#TWEAK_NAME = KeyboardMouse
+#KeyboardMouse_FILES = Tweak.xm
+
 LIBRARY_NAME = Addon
 Addon_FILES = Addon.m
 Addon_FRAMEWORKS = UIKit CoreGraphics
 Addon_INSTALL_PATH = /Library/Application Support/BeeKeyboard/Addons/KeyboardMouse.bundle
 
-ADDITIONAL_CFLAGS = -std=c99
+Addon_CFLAGS = -std=c99
 
+#include $(THEOS_MAKE_PATH)/tweak.mk
 include $(THEOS_MAKE_PATH)/library.mk
 
 internal-stage::

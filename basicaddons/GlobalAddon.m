@@ -8,9 +8,9 @@
 
 @interface UIApplication (SpringBoard)
 /*- (void)setBacklightLevel:(float)fp8;
-- (void)setBacklightLevel:(float)fp8 permanently:(BOOL)fp12;
-- (float)currentBacklightLevel;*/
-@end
+- (void)setBacklightLevel:(float)fp8 permanently:(BOOL)fp12;*/
+- (float)currentBacklightLevel;
+@endx
 
 
 @interface SBUIController
@@ -317,21 +317,31 @@ int globalKeyEvent(int keyCode, int modStat, int usagePage, BOOL keyDown)
         }else if ([event isEqualToString:@"BrightUp"]) {
             float cBright;
             float nBright;
-            cBright = [[UIScreen mainScreen] brightness];
+            
+            if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentBacklightLevel)]) {
+                //iOS5. cannot on iOS6
+                cBright = [[UIApplication sharedApplication] currentBacklightLevel];
+            }else{
+                //iOS6. cannot on iOS5 (I don't know why but freeze)
+                cBright = [[UIScreen mainScreen] brightness];
+            }
+            
             nBright = cBright <= 0.9375f ? cBright + 0.0625f : 1.0f;
-            //[[UIApplication sharedApplication] setBacklightLevel:nBright];
             [[objc_getClass("SBBrightnessController") sharedBrightnessController] _setBrightnessLevel:nBright showHUD:YES];
-            //[[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, LS(@"Brightness Up"));
             return 2; 
         }else if ([event isEqualToString:@"BrightDown"]) {
             float cBright;
             float nBright;
-            cBright = [[UIScreen mainScreen] brightness];
+            
+            if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentBacklightLevel)]) {
+                cBright = [[UIApplication sharedApplication] currentBacklightLevel];
+            }else{
+                cBright = [[UIScreen mainScreen] brightness];
+            }
+            
             nBright = cBright >= 0.0625f ? cBright - 0.0625f : 0.0f;
-            //[[UIApplication sharedApplication] setBacklightLevel:nBright];
             [[objc_getClass("SBBrightnessController") sharedBrightnessController] _setBrightnessLevel:nBright showHUD:YES];
-            //[[UIApplication sharedApplication] setBacklightLevel:nBright permanently:YES];
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, LS(@"Brightness Down"));
             return 2; 
         }else if ([event hasPrefix:@"toggle"]) {

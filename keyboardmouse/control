@@ -1,6 +1,6 @@
 Package: kr.iolate.beeaddon.keyboardmouse
 Name: KeyboardMouse
-Depends: kr.iolate.beekeyboard, jp.ashikase.mousesupport (>= svn.r207-2)
+Depends: kr.iolate.beekeyboard, jp.ashikase.mousesupport (>= svn.r207-2), mobilesubstrate
 Version: 0.2
 Architecture: iphoneos-arm
 Description: Virtual mouse for BeeKeyboard.
