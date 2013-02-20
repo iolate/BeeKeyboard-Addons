@@ -1,0 +1,23 @@
+{
+	items = (
+		{
+			label = Key;
+			cell = PSGroupCell;
+		},
+		{
+			defaults = "BeeKeyboard/SendMessages";
+			default = "7.1.40";
+			key = Send;
+			label = Send;
+			cell = BInputKeyCell;
+		},
+		{
+			defaults = "BeeKeyboard/SendMessages";
+			default = "";
+			key = RemoveAll;
+			label = "Remove All Settings";
+			cell = BInputKeyCell;
+		},
+	);
+	title = "Send Messages";
+}
