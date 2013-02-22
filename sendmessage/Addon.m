@@ -1,6 +1,8 @@
 #import "BeeKeyboard.h"
 #import <UIKit/UIKit.h>
 
+#import "SimulateTouch.h"
+
 #define SETTING_FILE_PATH @"/var/mobile/Library/Preferences/BeeKeyboard/SendMessages.plist"
 #define LS(a) a
 
@@ -263,6 +265,28 @@ void findButtons(UIView* view, int subCount, NSString* buttonClass, int buttonTa
     }
 }
 
+CGPoint ConvertWindowLocation(CGPoint point)
+{
+    //UIWindow is always portrait even device is landscaped
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    CGSize screen = [[UIScreen mainScreen] bounds].size;
+    
+    if (orientation == UIInterfaceOrientationPortrait) {
+        return point;
+    }else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        return CGPointMake(screen.width - point.x, screen.height - point.y);
+    }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        //Homebutton is left
+        return CGPointMake(screen.height - point.y, point.x);
+    }else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return CGPointMake(point.y, screen.width - point.x);
+    }else return point;
+    
+}
+
+
 BOOL simulateButtonEvent(UIView* inputView, NSDictionary* buttonData)
 {
     int inputSCount = countSuperviews(inputView, 0);
@@ -280,7 +304,16 @@ BOOL simulateButtonEvent(UIView* inputView, NSDictionary* buttonData)
     findButtons(commonView, buttonSCount - commonSCount, buttonClass, buttonTag, targetClass, buttonSelector, 1);
     if ([buttonsArray count] == 1) {
     	UIButton* b = (UIButton *)[buttonsArray objectAtIndex:0];
-    	[b sendActionsForControlEvents:UIControlEventTouchUpInside];
+    	//[b sendActionsForControlEvents:UIControlEventTouchUpInside];
+        
+        CGRect frameInWindow = [b.window convertRect:b.frame fromView:b.superview];
+        CGPoint locationInWindow = ConvertWindowLocation(CGPointMake(
+                    frameInWindow.origin.x + 0.5 * frameInWindow.size.width,
+                    frameInWindow.origin.y + 0.5 * frameInWindow.size.height));
+        
+        int pIndex = [[UIApplication sharedApplication] simulateTouch:0 atPoint:locationInWindow withType:STTouchDown];
+        [[UIApplication sharedApplication] simulateTouch:pIndex atPoint:locationInWindow withType:STTouchUp];
+        
     	return TRUE;
     }else {
     	return FALSE;

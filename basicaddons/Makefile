@@ -1,10 +1,10 @@
 export SDKVERSION=5.1
-export FW_DEVICE_IP = 10.0.1.3
+export FW_DEVICE_IP = 10.0.1.4
 
 include theos/makefiles/common.mk
 
 LIBRARY_NAME = Addon AddonHome
-Addon_FILES = Addon.m GlobalAddon.m FakeTouch.m
+Addon_FILES = Addon.m GlobalAddon.m
 Addon_FRAMEWORKS = UIKit
 Addon_PRIVATE_FRAMEWORKS = GraphicsServices
 Addon_INSTALL_PATH = /Library/Application Support/BeeKeyboard/Addons/Basic.bundle

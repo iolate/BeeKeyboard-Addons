@@ -1,6 +1,6 @@
 Package: kr.iolate.beeaddon.basic
 Name: BeeKeyboard Basic/Homescreen Addon
-Depends: kr.iolate.beekeyboard (>= 1.2-1)
+Depends: kr.iolate.beekeyboard (>= 1.2-1), kr.iolate.simulatetouch
 Version: 1.2
 Architecture: iphoneos-arm
 Description: Basic and Homescreen Addon for BeeKeyboard.

@@ -10,3 +10,6 @@
 "Up / Increase" = "위로 / 증가";
 "Down / Decrease" = "아래로 / 감소";
 "DESCRIPTION" = "4방향과 터치이벤트는 컨트롤이 선택되었을 때에만 작동합니다.";
+"Virtual Keyboard" = "가상(터치) 키보드";
+"Show Keyboard" = "키보드 보기";
+"Hide Keyboard" = "키보드 숨기기";

@@ -2,7 +2,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BeeKeyboard.h";
-#import "FakeTouch.h"
+//#import "FakeTouch.h"
+#import "SimulateTouch.h"
 
 #define ADDON_BUNDLE [NSBundle bundleWithPath:@"/Library/Application Support/BeeKeyboard/Addons/Basic.bundle"]
 #define LOCALIZED_TABLE_NAME @"Basic"
@@ -16,6 +17,11 @@
 +(BOOL)isFramed;
 @end
 
+@interface UIKeyboardImpl
++ (id)sharedInstance;
+- (void)hideKeyboard;
+- (void)showKeyboard;
+@end
 /*
 @interface UIView (FixedApi)
 // http://stackoverflow.com/a/2596519
@@ -115,9 +121,38 @@ static BeeBasic* instance;
 
 @end
 
+CGPoint ConvertWindowLocation(CGPoint point)
+{
+    //UIWindow is always portrait even device is landscaped
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    CGSize screen = [[UIScreen mainScreen] bounds].size;
+    
+    if (orientation == UIInterfaceOrientationPortrait) {
+        return point;
+    }else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        return CGPointMake(screen.width - point.x, screen.height - point.y);
+    }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        //Homebutton is left
+        return CGPointMake(screen.height - point.y, point.x);
+    }else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return CGPointMake(point.y, screen.width - point.x);
+    }else return point;
+    
+}
 
 void makeFakeTouch(UIView* view)
 {
+    
+    CGRect frameInWindow = [view.window convertRect:view.frame fromView:view.superview];
+    CGPoint locationInWindow = CGPointMake(frameInWindow.origin.x + 0.5 * frameInWindow.size.width, frameInWindow.origin.y + 0.5 * frameInWindow.size.height);
+    CGPoint location = ConvertWindowLocation(locationInWindow);
+    
+    int pIndex = [[UIApplication sharedApplication] simulateTouch:0 atPoint:location withType:STTouchDown];
+    [[UIApplication sharedApplication] simulateTouch:pIndex atPoint:location withType:STTouchUp];
+    
+    /*
     UITouch *touch = [[UITouch alloc] initInView:view];
     
     UIEvent *eventDown = [[UIEvent alloc] initWithTouch:touch];
@@ -130,7 +165,7 @@ void makeFakeTouch(UIView* view)
     
     [eventDown release];
     [eventUp release];
-    [touch release];
+    [touch release];*/
 }
 
 void findControl(UIView *view, NSMutableArray *views) {
@@ -364,6 +399,12 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
     if (keyDown) {
         if ([event isEqualToString:@"QuitApp"]) {
             [[BeeBasic sharedInstance] quitApp];
+            return 1;
+        }else if ([event isEqualToString:@"ShowVirtualKeyboard"]) {
+            [[UIKeyboardImpl sharedInstance] showKeyboard];
+            return 1;
+        }else if ([event isEqualToString:@"HideVirtualKeyboard"]) {
+            [[UIKeyboardImpl sharedInstance] hideKeyboard];
             return 1;
         }else if ([event isEqualToString:@"TabControl"] && isApp) {
             tabControls(YES);

@@ -34,6 +34,36 @@
 		</dict>
 		<dict>
 			<key>label</key>
+			<string>Virtual Keyboard</string>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>BeeKeyboard/basic</string>
+			<key>default</key>
+			<string></string>
+			<key>key</key>
+			<string>ShowVirtualKeyboard</string>
+			<key>label</key>
+			<string>Show Keyboard</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>BeeKeyboard/basic</string>
+			<key>default</key>
+			<string></string>
+			<key>key</key>
+			<string>HideVirtualKeyboard</string>
+			<key>label</key>
+			<string>Hide Keyboard</string>
+			<key>cell</key>
+			<string>BInputKeyCell</string>
+		</dict>
+		<dict>
+			<key>label</key>
 			<string>Controls</string>
 			<key>cell</key>
 			<string>PSGroupCell</string>

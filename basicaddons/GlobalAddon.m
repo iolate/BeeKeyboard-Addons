@@ -10,7 +10,7 @@
 /*- (void)setBacklightLevel:(float)fp8;
 - (void)setBacklightLevel:(float)fp8 permanently:(BOOL)fp12;*/
 - (float)currentBacklightLevel;
-@endx
+@end
 
 
 @interface SBUIController
