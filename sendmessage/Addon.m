@@ -8,7 +8,9 @@
 
 
 @interface UIKeyboard
-+ (BOOL)isOnScreen;
+//+ (BOOL)isOnScreen;
++ (id)activeKeyboard;
+- (id)targetWindow;
 @end
 
 @interface UIControl (Private)
@@ -129,7 +131,7 @@ static SendMessagesClass* instance;
     return commonView;
 }
 
--(BOOL)newButtonDefined
+-(BOOL)newButtonDefined:(int)simulateType
 {
     if (buttonView == nil || inputView == nil) return FALSE;
     if (buttonView.window != inputView.window) return FALSE;
@@ -171,6 +173,7 @@ static SendMessagesClass* instance;
     [buttonData setObject:[NSNumber numberWithInt:commonSCount] forKey:@"commonSCount"];
     [buttonData setObject:[NSString stringWithFormat:@"%@", [buttonView class]] forKey:@"buttonClass"];
     [buttonData setObject:[NSNumber numberWithInt:buttonView.tag] forKey:@"buttonTag"];
+    [buttonData setObject:[NSNumber numberWithInt:simulateType] forKey:@"simulateType"];
     if (targetClass != nil) {
         [buttonData setObject:targetClass forKey:@"targetClass"];
         [buttonData setObject:buttonSelector forKey:@"buttonSelector"];
@@ -193,15 +196,10 @@ static SendMessagesClass* instance;
         [alert show];
         [alert release];
     }else if ([buttonView isKindOfClass:[UIButton class]]) {
-        if ([self newButtonDefined]) {
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:LS(@"Complete") delegate:nil cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
-            [alert show];
-            [alert release];
-        }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:LS(@"Error") delegate:nil cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
-            [alert show];
-            [alert release];
-        }
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:LS(@"Select simulate type\nIf only iPhone app on iPad, plz use Default") delegate:[SendMessagesClass sharedInstance] cancelButtonTitle:LS(@"Default") otherButtonTitles:LS(@"Simulate Touch"), nil];
+        [alert setTag:3];
+        [alert show];
+        [alert release];
     }else{
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:LS(@"This is not a button.\nTry again?") delegate:[SendMessagesClass sharedInstance] cancelButtonTitle:LS(@"Cancel") otherButtonTitles:LS(@"OK"), nil];
         [alert setTag:1];
@@ -219,6 +217,16 @@ static SendMessagesClass* instance;
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:@"All settings are removed." delegate:[SendMessagesClass sharedInstance] cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
         [alert show];
         [alert release];
+    }else if (alertView.tag == 3) {
+        if ([self newButtonDefined:buttonIndex]) {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:LS(@"Complete") delegate:nil cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }else{
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:LS(@"Error") delegate:nil cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
     }
 }
 
@@ -293,6 +301,8 @@ BOOL simulateButtonEvent(UIView* inputView, NSDictionary* buttonData)
     int buttonSCount = [[buttonData objectForKey:@"buttonSCount"] intValue];
     int commonSCount = [[buttonData objectForKey:@"commonSCount"] intValue];
     int buttonTag = [[buttonData objectForKey:@"buttonTag"] intValue];
+    int simulateType = [[buttonData objectForKey:@"simulateType"] intValue] ?: 0;
+
     NSString* buttonClass = [buttonData objectForKey:@"buttonClass"];
     NSString* targetClass = [buttonData objectForKey:@"targetClass"];
     NSString* buttonSelector = [buttonData objectForKey:@"buttonSelector"];
@@ -304,15 +314,20 @@ BOOL simulateButtonEvent(UIView* inputView, NSDictionary* buttonData)
     findButtons(commonView, buttonSCount - commonSCount, buttonClass, buttonTag, targetClass, buttonSelector, 1);
     if ([buttonsArray count] == 1) {
     	UIButton* b = (UIButton *)[buttonsArray objectAtIndex:0];
-    	//[b sendActionsForControlEvents:UIControlEventTouchUpInside];
         
-        CGRect frameInWindow = [b.window convertRect:b.frame fromView:b.superview];
-        CGPoint locationInWindow = ConvertWindowLocation(CGPointMake(
-                    frameInWindow.origin.x + 0.5 * frameInWindow.size.width,
-                    frameInWindow.origin.y + 0.5 * frameInWindow.size.height));
+        if (simulateType == 0) {
+            [b sendActionsForControlEvents:UIControlEventTouchUpInside];
+        }else {
+            CGRect frameInWindow = [b.window convertRect:b.frame fromView:b.superview];
+            CGPoint locationInWindow = ConvertWindowLocation(CGPointMake(
+                                                                         frameInWindow.origin.x + 0.5 * frameInWindow.size.width,
+                                                                         frameInWindow.origin.y + 0.5 * frameInWindow.size.height));
+            
+            int pIndex = [[UIApplication sharedApplication] simulateTouch:0 atPoint:locationInWindow withType:STTouchDown];
+            [[UIApplication sharedApplication] simulateTouch:pIndex atPoint:locationInWindow withType:STTouchUp];
+        }
         
-        int pIndex = [[UIApplication sharedApplication] simulateTouch:0 atPoint:locationInWindow withType:STTouchDown];
-        [[UIApplication sharedApplication] simulateTouch:pIndex atPoint:locationInWindow withType:STTouchUp];
+        
         
     	return TRUE;
     }else {
@@ -327,7 +342,7 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
     if ([event isEqualToString:@"Send"]) {
         if (keyDown){
             
-            if ([UIKeyboard isOnScreen]) {
+            if ([[UIKeyboard activeKeyboard] targetWindow] != nil) {
                 UIView* textInput = [[[UIApplication sharedApplication] defaultFirstResponder] firstResponder];
                 
                 if (textInput == nil) {
