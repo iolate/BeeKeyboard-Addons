@@ -5,11 +5,13 @@
 
 #define SETTING_FILE_PATH @"/var/mobile/Library/Preferences/BeeKeyboard/SendMessages.plist"
 #define LS(a) a
-
+#define overiOS6 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0)
 
 @interface UIKeyboard
-//+ (BOOL)isOnScreen;
++ (BOOL)isOnScreen;
 + (id)activeKeyboard;
+
+//iOS6
 - (id)targetWindow;
 @end
 
@@ -342,7 +344,20 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
     if ([event isEqualToString:@"Send"]) {
         if (keyDown){
             
-            if ([[UIKeyboard activeKeyboard] targetWindow] != nil) {
+            
+            BOOL onEditing = NO;
+            
+            if (overiOS6) {
+                if ([[UIKeyboard activeKeyboard] targetWindow] != nil) {
+                    onEditing = YES;
+                }
+            }else{
+                if ([UIKeyboard isOnScreen]) {
+                    onEditing = YES;
+                }
+            }
+            
+            if (onEditing) {
                 UIView* textInput = [[[UIApplication sharedApplication] defaultFirstResponder] firstResponder];
                 
                 if (textInput == nil) {
@@ -390,23 +405,7 @@ int keyEvent(int keyCode, int modStat, BOOL keyDown)
             }
             
         }
-    }else if ([event isEqualToString:@"RemoveAll"]) {
-        if (keyDown) {
-            NSString* message = nil;
-            if ([[NSFileManager defaultManager] fileExistsAtPath:SETTING_FILE_PATH]) {
-                message = @"Do you want to remove all SendMessages' settings?";
-                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:message delegate:[SendMessagesClass sharedInstance] cancelButtonTitle:LS(@"Cancel") otherButtonTitles:LS(@"OK"), nil];
-                [alert setTag:2];
-                [alert show];
-                [alert release];
-            }else{
-                message = @"No settings.";
-                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:LS(@"SendMessages") message:message delegate:nil cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
-                [alert show];
-                [alert release];
-            }
-        }
-        
     }
+    
     return 0;
 }

@@ -1,6 +1,6 @@
 Package: kr.iolate.beeaddon.sendmessages
 Name: SendMessages
-Depends: kr.iolate.beekeyboard (>= 1.3-5), kr.iolate.simulatetouch
+Depends: kr.iolate.beekeyboard (>= 1.3-10), kr.iolate.simulatetouch
 Version: 0.2
 Architecture: iphoneos-arm
 Description: Send message with keyboard.

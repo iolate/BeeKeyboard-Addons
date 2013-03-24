@@ -12,11 +12,10 @@
 			cell = BInputKeyCell;
 		},
 		{
-			defaults = "BeeKeyboard/SendMessages";
-			default = "";
-			key = RemoveAll;
-			label = "Remove All Settings";
-			cell = BInputKeyCell;
+			cell = PSButtonCell;
+			label = "Remove Settings";
+			action = "removeSettings:";
+			table = SendMessages;
 		},
 	);
 	title = "Send Messages";

@@ -1,4 +1,6 @@
 export FW_DEVICE_IP = 10.0.1.4
+export ARCHS=armv7
+export TARGET=iphone:latest:4.3
 
 include theos/makefiles/common.mk
 
